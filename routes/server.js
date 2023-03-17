@@ -5,7 +5,7 @@ const path = require("path");
 
 module.exports = function (app) {
   // GET requests when users visit a different page
-  app.get("/", (req, res) =>
+  app.get("/index", (req, res) =>
     res.sendFile(path.join(__dirname, "../public/index.html"))
   );
   app.get("/notes", (req, res) =>
