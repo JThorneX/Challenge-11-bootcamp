@@ -10,17 +10,17 @@ const fs = require("fs");
 //app.use("/notes", notesRouter);
 
 //parse and read json from db
-module.exports = function (app) {
+module.exports = (app) => {
   app.get("/api/notes", function (req, res) {
     fs.readFile("./db/db.json", (err, data) => {
       if (err) throw err;
       let dbJSON = JSON.parse(data);
-      res.send(dbJSON);
+      res.json(dbJSON);
     });
   });
 
   //post - receive new note to save to request body -> add to db.json -> return to client (unique id)
-  app.post("/api/notes", function (req, res) {
+  app.post("/api/notes", (req, res) => {
     const clientNote = req.body;
 
     fs.readFile("./db/db.json", (err, data) => {
@@ -43,4 +43,13 @@ module.exports = function (app) {
     });
     res.send("Note Saved.");
   });
+
+  //extra credit : delete notes
+//   app.delete("/api/notes/:id", (req, res) => {
+//     const noteId = req.params.id;
+//     const note = JSON.parse(fs.readFile("./db/db.json"));
+//     const deleteNote = note.filter((removeNote) => removeNote.id !== noteId);
+//     fs.writeFile("./db/db.json", JSON.stringify(deleteNote));
+//     res.send(deleteNote);
+//   });
 };
